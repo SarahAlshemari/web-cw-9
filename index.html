@@ -13,10 +13,11 @@
   <!-- font-awesome مكتبة -->
   <!-- قم باستيراد مكتبة font-awesome هنا أو أي مكتبة متاحة لأيقونات التحميل -->
   <title>Cookie Factory</title>
+  <script src="https://kit.fontawesome.com/5cff7069f0.js" crossorigin="anonymous"></script>
 </head>
 
-<!-- <body onload="myFunction()"> -->
-<!-- <div id="page" style="display:none;"> -->
+<body onload="myFunction()">
+<div id="page" style="display:none;">
 <div id="sidebar">
   <img src="assets/img/cookies.png" class="logo" alt="website logo" />
   <h3>Cookie<br>Factory</h3>
@@ -27,6 +28,8 @@
       <a href="">Add a Cookie</a>
       <br></br>
       <a href="">See my Cart</a>
+      <br></br>
+      <a href="./Requests.html">Your Suggestions</a>
     </h4>
   </section>
 </div>
@@ -36,12 +39,14 @@
     <div class="card">
       <div class="image">
         <img class="card-img-top img-fluid" src="./assets/img/cream-brulee-cookie.png" alt="" />
+        
       </div>
       <div class="card-body">
         <h5 class="card-title">
           <span>Creme Brulee Cookie</span>
         </h5>
-        <button type="button" class="btn btn-primary">Add to Cart</button>
+        <input value="0" id="0" type="number"/>
+        <button type="button" onclick="AddProd(0)"class="btn btn-primary">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -49,12 +54,14 @@
     <div class="card">
       <div class="image">
         <img class="card-img-top img-fluid" src="./assets/img/white-choco-oreao-cookie.png" alt="" />
+       
       </div>
       <div class="card-body">
         <h5 class="card-title">
           <span>White Choco Orea Cookie</span>
         </h5>
-        <button type="button" class="btn btn-primary">Add to Cart</button>
+        <input value="0" id="1" type="number"/>
+        <button type="button" onclick="AddProd(1)"class="btn btn-primary">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -62,24 +69,43 @@
     <div class="card">
       <div class="image">
         <img class="card-img-top img-fluid" src="./assets/img/dates-cookie.png" alt="" />
+        
       </div>
       <div class="card-body">
         <h5 class="card-title">
           <span>Mixed Dates Cookie</span>
         </h5>
-        <button type="button" class="btn btn-primary">Add to Cart</button>
+        <input value="0" id="2" type="number"/>
+        <button type="button" onclick="AddProd(2)"class="btn btn-primary">Add to Cart</button>
       </div>
     </div>
   </div>
 </div>
+<h5>Total</h5>
+<h1 id="total"> 0 KD </h1>
+<ul id="list"></ul>
+
+<a href="./Checkout.html"><button class="btn btn-primary" type="button"> Checkout</button> </a>
 </div>
+<!-- <h5>Total</h5>
+<h1 id="total"> 0 KD </h1>
+<ul id="list"></ul>
+
+<a href="./Checkout.html"><button class="btn btn-primary" type="button"> Checkout</button> </a> -->
 <!-- بونص 👑 -->
 <div id="loader">
   <!-- قم بإضافة أيقونة التحميل هنا -->
+ <i class="fas fa-spinner"></i>
+  
 </div>
 <script>
     // كود اختبار أيقونة التحميل
-  /*
+
+    function load_home() {
+     document.getElementById("loader").innerHTML='<object type="text/html" data="home.html" ></object>';
+     console.log(load_home)
+}
+  
   let myVar;
   function myFunction() {
     myVar = setTimeout(showPage, 3000);
@@ -88,7 +114,40 @@
     document.getElementById("loader").style.display = "none";
     document.getElementById("page").style.display = "block";
   }
-  */
+  $(window).on("load",function(){
+     $(".loader-wrapper").fadeOut("slow");
+});
+  
+ let products=[
+   {name: "Creme Brulee Cookie", price:1.750, calories:200},
+   {name: "White Choco Orea Cookie", price:1, calories:200},
+   {name: "Mixed Dates Cookie", price:1.250, calories:200}
+ ];
+
+ let cart=[];
+
+ function AddProd(index){
+   let product=products[index];
+
+   let quantity=document.getElementById(index).value;
+   product.quantity=quantity;
+   cart.push(product);
+
+   let total=0;
+   document.getElementById("list").innerHTML="";
+   for (let index = 0; index < cart.length; index++) {
+     let element = cart[index];
+     let price=element.price * element.quantity;
+     total=total+price;
+     console.log(total);
+
+     let list=document.getElementById("list");
+     list.innerHTML+= `<li> ${element.quantity} ${element.name} for each ${element.price} KD </li>`;
+     
+   }
+   document.getElementById("total").innerText=`${total} KD`;
+ }
+
 </script>
 </body>
 
